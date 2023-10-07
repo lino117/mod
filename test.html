@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <title>layout 管理界面大布局示例 - Layui</title>
+    <meta name="renderer" content="webkit">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.8.17/css/layui.css" integrity="sha512-Q6nQjI94xHtXv2pETxnz2BWVjPwiK0M56Emckd0qr2wNdibPa7B0CWKMGeqQaa5+V14mARAGpkrAVMrniU0apA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Compressed CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+<div class="layui-layout layui-layout-admin">
+    <!--    Headers-->
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-gray">
+            SquealerAdmin
+        </div>
+        <!-- 头部区域（可配合layui 已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layui-padding-2" >
+                <i class="layui-icon layui-icon-shrink-right"></i>
+            </li>
+            <!-- search form-->
+            <li class="layui-nav-item layui-padding-2">
+                <div class="layui-form">
+                    <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                            <i class="layui-icon layui-icon-search"></i>
+                           <!-- <span class="material-symbols-outlined">search</span></div>-->
+                        </div>
+                        <input type="text" class="layui-input" placeholder="Search">
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                <a href="javascript:;">
+                    <img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img">
+                    <span id="accountName">莫得</span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">Your Profile</a></dd>
+                    <dd><a href="javascript:;">Settings</a></dd>
+                    <dd><a href="javascript:;">Sign out</a></dd>
+                </dl>
+            </li>
+<!--            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>-->
+<!--                <a href="javascript:;">-->
+<!--                    <i class="layui-icon layui-icon-more-vertical"></i>-->
+<!--                </a>-->
+<!--            </li>-->
+        </ul>
+    </div>
+    <!--左边导航区域-->
+    <div class="layui-side layui-bg-gray">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+<!--                <li class="layui-nav-item layui-nav-itemed"> &lt;!&ndash; 用 itemed 会默认展开 子元素&ndash;&gt;-->
+<!--                    <a class="" href="javascript:;">menu group 1</a>-->
+<!--                    <dl class="layui-nav-child">-->
+<!--                        <dd><a href="javascript:;">menu 1</a></dd>-->
+<!--                        <dd><a href="javascript:;">menu 2</a></dd>-->
+<!--                        <dd><a href="javascript:;">menu 3</a></dd>-->
+<!--                        <dd><a href="javascript:;">the links</a></dd>-->
+<!--                    </dl>-->
+<!--                </li>-->
+                <li class="layui-nav-item">
+                       <a href="" id="users"> <i class="layui-icon layui-icon-group"></i> Users list</a>
+                </li>
+
+                <li class="layui-nav-item">
+                   <i class="layui-icon layui-icon-fire"></i> Squeals
+                </li>
+
+                <li class="layui-nav-item"> <a href="javascript:;">
+                    <i class="layui-icon layui-icon-star"></i> CANALI ufficiali</a>
+                </li>
+
+                <li class="layui-nav-item"><a href="javascript:;" id="canali">
+                    <i class="layui-icon layui-icon-star"></i> canali privati</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <blockquote class="layui-elem-quote layui-text">
+                Layui 框体布局内容主体区域
+            </blockquote>
+            <div class="layui-card layui-panel">
+                <div class="layui-card-header">
+                    下面是充数内容，为的是出现滚动条
+                </div>
+                <div class="layui-card-body">
+                    充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>你还真滑到了底部呀
+                </div>
+            </div>
+            <br><br>
+        </div>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        底部固定区域
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.8.17/layui.js" integrity="sha512-8Ej7yijxC5UhnDcSzsOheP2oN+0PxPmvx6t97W2XawQp47hg+7rtgmi75MhC7MWhPqRhHOe3sfxGVnokqlSKVA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- Compressed JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/js/foundation.min.js" crossorigin="anonymous"></script>
+<script src="js/main.js"></script>
+
+
+</body>
+</html>
