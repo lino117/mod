@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <title>Ciao Bellezza！</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" href=" //cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div class="grid-x">
+    <div class="cell header">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    <li class="menu-text">SquealerAdmin</li>
+
+                    <li ><label>
+                    <!--                        <span class="material-icons-outline">home </span>-->
+                    <!--                        <i class="material-icons cell">search</i>-->
+                    <input type="search" placeholder="肥肉都是自己吃进去的！！！1">
+                </label></li>
+                    <li><button type="button" class="button"><i class="fi-magnifying-glass"></i>Search</button></li>
+                </ul>
+            </div>
+
+            <div class="top-bar-right">
+                <ul class="menu">
+                    <li>
+                        <img id="profile" class="border_radius" src="img/profile.jpg" crossorigin="anonymous">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="cell body">
+        <div class="grid-x">
+            <div class="cell large-1 medium-2 small-4">
+
+                <ul class="menu vertical icons icon-left " >
+
+                    <li class="index" id="users"><a href="#usersPanel" id="usersA" >
+                        <i class="fi-torsos"></i>
+                       <span>Users</span>
+                    </a></li>
+
+                    <li class="index" id="squeals"><a href="#squealsPanel" id="squealsA">
+                        <i class="fi-social-twitter"></i>Squeals</a>
+                    </li>
+                    <li class="index" id="official"><a href="#officialPanel" id="officalA">
+                        <i class="fi-x-circle"></i>CANALI ufficiali</a>
+                    </li>
+                    <li class="index" id="private"><a href="#privatePanel" id="privateA">
+                        <i class="fi-x"></i>canali privati</a>
+                    </li>
+                </ul>
+<!--                <ul class="tabs vertical icons icon-left " >-->
+
+<!--                    <li  class="tabs-title" id="users"><a href="#usersPanel">-->
+<!--                        <i class="fi-torsos"></i>-->
+<!--                       <span>Users</span>-->
+<!--                    </a></li>-->
+
+<!--                    <li class="tabs-title" id="squeals"><a href="#squealsPanel">-->
+<!--                        <i class="fi-social-twitter"></i><span>Squeals</span></a>-->
+<!--                    </li>-->
+<!--                    <li class="tabs-title" id="official"><a href="#officialPanel">-->
+<!--                        <i class="fi-x-circle"></i><span>CANALI ufficiali</span></a>-->
+<!--                    </li>-->
+<!--                    <li class="tabs-title" id="private"><a href="#privatePanel">-->
+<!--                        <i class="fi-x"></i><span>canali privati</span></a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+            </div>
+            <div class="cell auto " >
+                <div class="visible" id="usersPanel">
+                </div>
+                <div class=" hide" id="squealsPanel">
+                </div
+                ><div class=" hide" id="officialPanel">
+                </div>
+                <div class="hide" id="privatePanel">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/js/foundation.min.js" crossorigin="anonymous"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
