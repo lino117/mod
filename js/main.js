@@ -31,9 +31,38 @@ const BaseUrl = 'http://localhost:3000/social/'
 
 
 showTable = async (res, content)=>{
+
     for (const Element of res) {
         var username = $('<p>' + Element.username + '</p>')
         $(content).append ([username])
+    }
+
+}
+creditRender = async (creditAvailable)=>{
+    var available = $('<td class="grid-container">')
+    $.each(creditAvailable,(key,value)=>{
+        available.append($('<div class="grid-x"> <span class="cell large-5"> ' + value + '</span><input class="cell large-5"></div></td>'))
+    })
+
+    return available
+}
+getUsers = async (res,table)=>{
+    for (const Element of res) {
+        const row = $('<tr>')
+        const username = $('<td>' + Element.username + '</td>')
+        const nickname = $('<td>' + Element.nickname + '</td>')
+        const type = $('<td>' + Element.accountType + '</td>')
+        const inizialCredit = $('<td>' + Element.creditInit + '</td>')
+
+        const creditHead = '<td class="grid-container"><div class="grid-x"> <span class="cell large-5"> '
+        const creditFeet = '</span><input class="cell large-5" ></div></td>'
+        const dayAvailable = $(creditHead + Element.creditAvailable.daily + creditFeet )
+        const weekAvailable = $(creditHead + Element.creditAvailable.weekly + creditFeet )
+        const monthAvailable = $(creditHead + Element.creditAvailable.monthly + creditFeet )
+        const state = $('<td> libero </td>')
+        row.append([username,nickname,type,inizialCredit,dayAvailable,weekAvailable,monthAvailable,state])
+        const closeRow = $('</tr>')
+        $(table).append ([row,closeRow])
     }
 }
 
@@ -41,7 +70,8 @@ $(document).ready(()=> {
 
     $.get(BaseUrl + 'get_all_users', async (res) => {
 
-        await showTable(res,$('#usersPanel'))
+        await getUsers(res,$('#userTable'))
+
     })
 
     $('.index').click(async (e) => {
@@ -62,22 +92,22 @@ $(document).ready(()=> {
         switch (clicked.attr('id')) {
             case 'users':
                 $.get(BaseUrl + 'get_all_users', async (res) => {
-                    await showTable(res,content)
+
+                    await getUsers(res,$('#userTable'))
                 })
                 break;
             case 'squeals':
                 $.get(BaseUrl + 'allSqueals', async (res) => {
-                    await showTable(res,content)
+
                 })
                 break;
             case 'official':
                 $.get(BaseUrl + 'allChannelO', async (res) => {
-                    await showTable(res,content)
+
                 })
                 break;
             case 'private':
                 $.get(BaseUrl + 'allChannelP', async (res) => {
-                    await showTable(res,content)
 
                 })
                 break;
@@ -90,4 +120,11 @@ $(document).ready(()=> {
 
 
     })
+
+    // $('#profile').on('click',async ()=>{
+    //     $('#profileMenu').removeClass('hide').addClass('visible')
+    // }).on('mouseleave',async ()=>{
+    //     $('#profileMenu').removeClass('visible').addClass('hide')
+    // })
+
 })

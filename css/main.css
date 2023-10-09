@@ -2,11 +2,19 @@
     margin-right:1rem
 }
 .border_radius{
-    border-radius: 2rem;
+    border-radius: 10rem;
 }
 #profile{
     height: 2.5rem;
     width: 2.5rem;
     margin-right: 2rem;
+}
+#change{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 10rem;
+}
+#cancel{
+    border-radius: 10rem;
 }
 

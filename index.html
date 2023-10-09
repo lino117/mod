@@ -21,19 +21,36 @@
                 <ul class="dropdown menu" data-dropdown-menu>
                     <li class="menu-text">SquealerAdmin</li>
 
-                    <li ><label>
-                    <!--                        <span class="material-icons-outline">home </span>-->
-                    <!--                        <i class="material-icons cell">search</i>-->
-                    <input type="search" placeholder="肥肉都是自己吃进去的！！！1">
-                </label></li>
-                    <li><button type="button" class="button"><i class="fi-magnifying-glass"></i>Search</button></li>
+                    <li >
+<!--                    <div class="input-group">-->
+<!--                        <i class="fi-magnifying-glass input-group-label " disabled></i>-->
+<!--                        <input type="text" placeholder="肥肉都是自己吃进去的！！！1" class="input-group-field">-->
+<!--                        <div class="input-group-button">-->
+<!--&lt;!&ndash;                            <input type="submit" class="button" value="Search">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <button type="button" class="button"><i class="fi-magnifying-glass"></i>Search</button>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+                        <label>
+                            <input type="search" placeholder="肥肉都是自己吃进去的！！！1">
+                        </label>
+                    </li>
+                    <li><button type="submit" class="button"><i class="fi-magnifying-glass"></i>Search</button></li>
                 </ul>
             </div>
 
             <div class="top-bar-right">
                 <ul class="menu">
                     <li>
-                        <img id="profile" class="border_radius" src="img/profile.jpg" crossorigin="anonymous">
+                        <a href="" id="clickProfile">
+                        <img id="profile" class="border_radius" src="img/pixiu.jpg" crossorigin="anonymous">
+                            <ul class="menu vertical hide" id="profileMenu">
+                                <li>Profile</li>
+                                <li>Setting</li>
+                                <li>Log Out</li>
+                            </ul>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -61,35 +78,104 @@
                         <i class="fi-x"></i>canali privati</a>
                     </li>
                 </ul>
-<!--                <ul class="tabs vertical icons icon-left " >-->
-
-<!--                    <li  class="tabs-title" id="users"><a href="#usersPanel">-->
-<!--                        <i class="fi-torsos"></i>-->
-<!--                       <span>Users</span>-->
-<!--                    </a></li>-->
-
-<!--                    <li class="tabs-title" id="squeals"><a href="#squealsPanel">-->
-<!--                        <i class="fi-social-twitter"></i><span>Squeals</span></a>-->
-<!--                    </li>-->
-<!--                    <li class="tabs-title" id="official"><a href="#officialPanel">-->
-<!--                        <i class="fi-x-circle"></i><span>CANALI ufficiali</span></a>-->
-<!--                    </li>-->
-<!--                    <li class="tabs-title" id="private"><a href="#privatePanel">-->
-<!--                        <i class="fi-x"></i><span>canali privati</span></a>-->
-<!--                    </li>-->
-<!--                </ul>-->
             </div>
+
             <div class="cell auto " >
                 <div class="visible" id="usersPanel">
+                    <form>
+                    <table class="hover" >
+                        <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nickname</th>
+                            <th width="200">Account Type</th>
+                            <th width="100">Credito iniziale</th>
+                            <th width="150">Credito rimanente Day</th>
+                            <th width="150">Credito rimanente Week</th>
+                            <th width="150">Credito rimanente Month</th>
+                            <th width="200">Stato Account</th>
+                        </tr>
+                        </thead>
+                        <tbody id="userTable">
+
+                        </tbody>
+                    </table>
+
+                    </form>
                 </div>
                 <div class=" hide" id="squealsPanel">
-                </div
-                ><div class=" hide" id="officialPanel">
+                    <form>
+                        <table class="hover" >
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Nickname</th>
+                                <th width="200">Account Type</th>
+                                <th width="100">Credito iniziale</th>
+                                <th width="150">Credito rimanente Day</th>
+                                <th width="150">Credito rimanente Week</th>
+                                <th width="150">Credito rimanente Month</th>
+                                <th width="200">Stato Account</th>
+                            </tr>
+                            </thead>
+                            <tbody id="squealTable">
+
+                            </tbody>
+                        </table>
+
+                    </form>
+                </div>
+                <div class=" hide" id="officialPanel">
+                <form>
+                    <table class="hover" >
+                        <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nickname</th>
+                            <th width="200">Account Type</th>
+                            <th width="100">Credito iniziale</th>
+                            <th width="150">Credito rimanente Day</th>
+                            <th width="150">Credito rimanente Week</th>
+                            <th width="150">Credito rimanente Month</th>
+                            <th width="200">Stato Account</th>
+                        </tr>
+                        </thead>
+                        <tbody id="officialTable">
+
+                        </tbody>
+                    </table>
+
+                </form>
                 </div>
                 <div class="hide" id="privatePanel">
+                    <form>
+                        <table class="hover" >
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Nickname</th>
+                                <th width="200">Account Type</th>
+                                <th width="100">Credito iniziale</th>
+                                <th width="150">Credito rimanente Day</th>
+                                <th width="150">Credito rimanente Week</th>
+                                <th width="150">Credito rimanente Month</th>
+                                <th width="200">Stato Account</th>
+                            </tr>
+                            </thead>
+                            <tbody id="privateTable">
+
+                            </tbody>
+                        </table>
+
+                    </form>
                 </div>
 
+                <footer class="button-group align-right">
+                    <a class="button alert cancel" id="cancel">Cancel</a>
+                    <a class="button success change" id="change">Submit</a>
+                </footer>
             </div>
+
         </div>
     </div>
 </div>
