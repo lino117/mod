@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.8.1/dist/css/foundation.min.css" crossorigin="anonymous">
 
     <link rel="stylesheet" href=" //cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.min.css"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
 
@@ -98,15 +98,16 @@
                         <table class="hover" >
                             <thead>
                             <tr>
-                                <th>Username</th>
+                                <th>Autor</th>
                                 <th>Contenuto</th>
-                                <th width="200">Destinatari</th>
-                                <th width="10"></th>
+                                <th width="400">Destinatari</th>
+<!--                                <th width="10"></th>-->
                                 <th width="150">Numero visite</th>
                                 <th width="150">Like</th>
                                 <th width="150">Dislike</th>
                                 <th width="200">Data</th>
                                 <th width="100">Messaggio Automatico</th>
+                                <th class="hide">ID</th>
                             </tr>
                             </thead>
                             <tbody id="squealTable">
@@ -121,13 +122,14 @@
                     <table class="hover" >
                         <thead>
                         <tr>
-                            <th>Canali ufficiali</th>
-                            <th>Admin</th>
-                            <th>Descrizione</th>
+                            <th width="200">Canali ufficiali</th>
+                            <th width="250">Admin</th>
+                            <th >Descrizione</th>
 <!--                            <th width="200">Visualizza Mem</th>-->
                             <th width="100">Numero iscritti</th>
                             <th width="100">Numero di squeals</th>
                             <th width="50">Mutabile</th>
+                            <th width="50"> Aggiungere uno squeal</th>
 
                         </tr>
                         </thead>
@@ -136,6 +138,29 @@
                         </tbody>
                     </table>
 
+                    <div class="reveal large" id="channelSqueals" data-reveal>
+                        <h1>Gli squaeles di Channel: <span id="channelName"></span></h1>
+
+                        <table class="hover">
+                            <thead>
+                            <tr>
+                                <th id="autor">Autor</th>
+                                <th>Contenuto</th>
+                                <th width="400">Destinatari</th>
+                                <th width="150">Numero visite</th>
+                                <th width="150">Like</th>
+                                <th width="150">Dislike</th>
+                                <th width="200">Data</th>
+                                <th width="100">Messaggio Automatico</th>
+                                <th id="squealID"> Squeal ID </th>
+                            </tr>
+                            </thead>
+                            <tbody id="channelSquealTable">
+
+                            </tbody>
+                        </table>
+                    </div>
+
 
                 </div>
                 <div class="hide" id="privatePanel">
@@ -143,8 +168,8 @@
                         <table class="hover" >
                             <thead>
                             <tr>
-                                <th>Canali privati</th>
-                                <th>Admin</th>
+                                <th width="200">Canali privati</th>
+                                <th width="250">Admin</th>
                                 <th>Descrizione</th>
                                 <!--                            <th width="200">Visualizza Mem</th>-->
                                 <th width="100" class="number">Numero iscritti</th>
@@ -156,8 +181,6 @@
 
                             </tbody>
                         </table>
-
-
                 </div>
 
                 <footer class="button-group align-right">

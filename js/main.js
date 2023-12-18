@@ -1,7 +1,24 @@
 
 const BaseUrl = 'http://localhost:3000/social/'
 
+addSqueal = async ()=>{
+   // aprire un modal window..... reaveal for fundation take a look !
+   //  $('#addButton').click((e)=>{
+   //      const clicked=$(e.target).parent() //clicked button > parent = td
+   //      $('#channelName').html(name)
+   //  })
+    const tbody = $('#officialTable')
+    $('.addButton').click(async (e)=>{
+        const names = tbody.find("td[id='name']")
+        const index = $(e.target).closest('tr').index()
+        $('#channelName').text(names[index].innerHTML)
 
+        $.get(BaseUrl + 'allSqueals', async (res) => {
+            await getSqueals(res, $('#channelSquealTable'))
+        })
+    })
+
+}
 
 getUsers = async (res,table)=>{
 
@@ -25,21 +42,23 @@ getUsers = async (res,table)=>{
         table.append ([row,closeRow])
     }
 }
-getSqueals = async (res,table)=>{
+getSqueals = async (res,table,squealID)=>{
     for (const squeal of res) {
         const row = $('<tr>')
         const username = $('<td id="username">' + squeal.sender + '</td>')
         const contenuto = $('<td>' + squeal.body + '</td>')
-        const destinatari = $('<td id="destArray">'+squeal.recipients +'</td>')
-        const button = $('<td><a class="button tiny" id="destId"><i class="fi-plus"></i></a></td>')
+        // const destinatari = $('<td id="destArray">'+squeal.recipients +'</td>')
+
+        // const button = $('<td id="destButton"><a class="button tiny" id="destId"><i class="fi-plus"></i></a></td>')
         const numTdHead = '<td class="grid-container"><div class="grid-x"> <span class="cell large-5"> '
         const numTdFeet = '</span><input class="cell large-5" value="0" ></div></td>'
-        // const impression = $(numTdHead + squeal.reaction.impression + numTdFeet)
-        // const like = $(numTdHead + squeal.reaction.impression + numTdFeet)
-        // const dislike = $(numTdHead + squeal.reaction.impression + numTdFeet)
-        const impression = $(numTdHead + 100 + numTdFeet)
-        const like = $(numTdHead + 200 + numTdFeet)
-        const dislike = $(numTdHead + 300 + numTdFeet)
+        const destinatari = $(numTdHead+squeal.recipients +'</span><input class="cell large-5" type="text" value="'+squeal.recipients+'"></div> </td>')
+        const impression = $(numTdHead + squeal.reaction.impression + numTdFeet)
+        const like = $(numTdHead + squeal.reaction.like + numTdFeet)
+        const dislike = $(numTdHead + squeal.reaction.dislike + numTdFeet)
+        // const impression = $(numTdHead + 100 + numTdFeet)
+        // const like = $(numTdHead + 200 + numTdFeet)
+        // const dislike = $(numTdHead + 300 + numTdFeet)
         const data = $('<td>' + squeal.dateTime + '</td>')
         // const automatic = $('<td><input type="checkbox" id="automatic" checked=' + squeal.automaticMessage + '></td>')
         var automatic
@@ -49,27 +68,40 @@ getSqueals = async (res,table)=>{
         else {
             automatic = $('<td><input type="checkbox" id="automatic" ></td>')
         }
+        const squealId = $('<td id="squealID" class="hide">'+ squeal._id + '</td>')
         const closeRow = $('</tr>')
-        row.append([username,contenuto,destinatari,button,impression,like,dislike,data,automatic])
+        row.append([username,contenuto,destinatari,impression,like,dislike,data,automatic,squealId])
         table.append([row,closeRow])
     }
 }
+
 getChannel = async (res, table)=>{
     for (const channel of res) {
         const row = $('<tr>')
-        const name = $('<td>' + channel.name + '</td>')
+        const name = $('<td id="name">' + channel.name + '</td>')
         const admin = $('<td>' + channel.admin + '</td>')
-        const desc = $('<td>' + channel.desciption + '</td>')
+        var desc
+        var button
+        if (channel.typeOf==='private'){
+            desc = $('<td>' + channel.desciption + '</td>')
+            button =  $('<td class="hide"><a class="button tiny"><i class="fi-plus"></i></a>')
+        }else{
+            desc= $('<td class="grid-container"><div class="grid-x"> <span class="cell large-5">'+channel.desciption+'</span><input class="cell large-5" type="text"></div> </td>')
+            button = $('<td><a class="button tiny addButton" id="addButton" onclick="addSqueal()" data-open="channelSqueals">+</a>')
+            // button = $('<td><a class="button tiny " id="addButton" onclick="'+ await addSqueal(channel.name) +'" data-open="channelSqueals"><i class="fi-plus"></i></a>')
+        }
         const numFollowers = $('<td>' + channel.followers + '</td>')
         const numSqueals = $('<td>' + channel.numPost + '</td>')
         const mutable = $('<td><input type="checkbox" id="automatic"></td>')
+
         const closeRow = $('</tr>')
-        row.append([name,admin,desc,numFollowers,numSqueals,mutable])
+
+        row.append([name,admin,desc,numFollowers,numSqueals,mutable,button])
         table.append([row,closeRow])
 
     }
 }
-ModificUser = async (tbody,username)=>{
+modificUser = async (tbody, username)=>{
     const inputs = tbody.find('input')
 
     var userIndex
@@ -134,77 +166,106 @@ ModificUser = async (tbody,username)=>{
 
 }
 
-// ModificSqueal = async (tbody,username)=>{
-//     const inputs = tbody.find('input')
-//     // const checkbox = tbody.find('td[id='']')
-//     var userIndex
-//     var newSquealInfo = []
-//     var newReaction = {
-//         username : undefined,
-//         visitNumber : 0,
-//         likeNumber : 0,
-//         dislikeNumber : 0,
-//         automatic:false
-//     }
-//
-//     inputs.each((index,element)=>{
-//         // 判断 input 表格有没有被更改
-//         if (element.value != 0 || element.type.is('checkbox')){
-//             userIndex = parseInt(index/4)
-//
-//             if (!newReaction.username){
-//                 newReaction.username=username[userIndex].innerHTML
-//             }
-//
-//             switch ((index+1) % 4){
-//                 case 1 :
-//                     newReaction.visitNumber = element.value
-//                     break;
-//                 case 2:
-//                     newReaction.likeNumber = element.value
-//                     break;
-//                 case 3:
-//                     newReaction.dislikeNumber = element.value
-//                     break;
-//                 case 0:
-//                     newReaction.automatic= element.is(':checked')
-//             }
-//         }
-//
-//         // 每input数量 等于0 所以等于最后一个 且username存在， 那就push这个用户
-//         if ((index+1) % 4 == 0 && newReaction.username){
-//
-//             newSquealInfo.push(newReaction)
-//             newReaction = {
-//                 username : undefined,
-//                 visitNumber : 0,
-//                 likeNumber : 0,
-//                 dislikeNumber : 0,
-//                 automatic: false
-//             }
-//
-//         }
-//
-//     })
-//     if (newSquealInfo.length!= 0) {
-//         $.ajax({
-//             contentType: "application/json",
-//             data: JSON.stringify(newUserInfo),
-//             dataType: "json",
-//             method: "PATCH",
-//             url: BaseUrl + 'updateSqueal'
-//         }).done((res) => {
-//             console.log( 'Modifica eseguita:',res)
-//         })
-//
-//     }
-//
-//
-// }
+modificSqueal = async (tbody)=>{
+    const inputs = tbody.find('input')
+    const ids= tbody.find("td[id='squealID']")
+    // const checkbox = tbody.find('td[id='']')
+    var squealIndex
+    var newSquealInfo = []
+    var newInfos = {
+        squealID : undefined,
+        newRecipients:[],
+        visitNumber : 0,
+        likeNumber : 0,
+        dislikeNumber : 0,
+        automatic:false
+    }
+
+    inputs.each((index,element)=>{
+        // 判断 input 表格有没有被更改
+        if (element.value != 0  ||  element.value){
+            squealIndex = parseInt(index/5)
+
+            if (!newInfos.squealID){
+                newInfos.squealID=ids[squealIndex].innerHTML
+            }
+
+            switch ((index+1) % 5){
+                case 1:
+                   newInfos.newRecipients = element.value.split(',')
+                    break;
+                case 2 :
+                    // console.log('impression',element.value)
+                    newInfos.visitNumber=(element.value!=0? element.value:0)
+
+                    break;
+                case 3:
+                    // console.log('like',element.value)
+
+                    newInfos.likeNumber=(element.value!=0? element.value:0)
+
+                    break;
+                case 4:
+                    // console.log('dislike',element.value)
+
+                    newInfos.dislikeNumber=(element.value!=0? element.value:0)
+
+                    break;
+                case 0:
+                    newInfos.automatic = (element.checked)
+            }
+
+        }
+
+        // 每input数量 等于0 所以等于最后一个 且username存在， 那就push这个用户
+        if ((index+1) % 5 == 0 && newInfos.squealID){
+            newSquealInfo.push(newInfos)
+            newInfos = {
+                squealID : undefined,
+                newRecipients: [],
+                visitNumber : 0,
+                likeNumber : 0,
+                dislikeNumber : 0,
+                automatic: false
+            }
+
+        }
+
+
+    })
+    if (newSquealInfo.length!= 0) {
+        $.ajax({
+            contentType: "application/json",
+            data: JSON.stringify(newSquealInfo),
+            dataType: "json",
+            method: "PATCH",
+            url: BaseUrl + 'updateSqueal'
+        }).done((res) => {
+            console.log( 'Modifica eseguita:',res)
+        })
+
+    }
+
+
+}
+
+modificOff = async (tbody)=>{
+    const inputs = tbody.find('input')
+    const names = tbody.find("td[id='name']")
+    var addSqueals
+    var newDesc
+
+    for (const input of inputs) {
+
+
+    }
+}
 
 
 
+$(document).ready(()=>{
 
+    $(document).foundation()
 
     $.get(BaseUrl + 'get_all_users', async (res) => {
 
@@ -212,9 +273,9 @@ ModificUser = async (tbody,username)=>{
 
     })
 
-    $.get(BaseUrl + 'allSqueals', async (res) => {
-        await getSqueals(res, $('#squealTable'))
-    })
+    // $.get(BaseUrl + 'allSqueals', async (res) => {
+    //     await getSqueals(res, $('#squealTable'))
+    // })
 
     // $.get(BaseUrl + 'allChannelP', async (res) => {
     //     await getChannel(res, $('#privateTable'))
@@ -233,15 +294,14 @@ ModificUser = async (tbody,username)=>{
 
         const tbody =  $('.visible').find('tbody')
         const username = tbody.find("td[id='username']")
-        const dest = tbody.find("td[id='destArray']")
-        console.log(dest)
+
         switch (tbody.attr('id')) {
             case 'userTable':
-                ModificUser(tbody,username)
+                modificUser(tbody,username)
                 console.log('switch case')
                 break;
             case 'squealTable':
-                ModificSqueal(tbody,username)
+                modificSqueal(tbody)
                 break;
             case 'officialTable':
                 ModificOffic(tbody,username)
@@ -251,7 +311,6 @@ ModificUser = async (tbody,username)=>{
                 break;
         }
     })
-
 
 
 
@@ -285,6 +344,7 @@ ModificUser = async (tbody,username)=>{
                         await getSqueals(res, $('#squealTable'))
                     })
 
+
                     break;
                 case 'official':
                     $.get(BaseUrl + 'allChannelO', async (res) => {
@@ -305,7 +365,7 @@ ModificUser = async (tbody,username)=>{
 
 
     })
-
+})
     // $('#profile').on('click',async ()=>{
     //     $('#profileMenu').removeClass('hide').addClass('visible')
     // }).on('mouseleave',async ()=>{
