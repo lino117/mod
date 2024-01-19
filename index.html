@@ -71,7 +71,45 @@
             </div>
 
             <div class="cell auto " >
+
+
                 <div class='visible' id="usersPanel">
+                    <div class="toolKit grid-x">
+                        <div class="cell large-1"><a class="button success small" id="creatUser" data-open="creatUserForm">Crea Utente</a></div>
+                        <div class="cell large-1"><input type="number" id="showUserNumber" value="10"> </div>
+                        <div class="cell large-1"><a class="button primary refreshpage">Aggiorna</a></div>
+                    </div>
+                    <div class="grid-x filterField">
+                        <div class="cell large-2">
+                            <input type="text" placeholder="Inserire il nome da filtrare" id="filtName">
+                        </div>
+                        <div class="cell large-3">
+                            <select id="filtType">
+                                <option>- Scegliere il tipo di utente -</option>
+                                <option>Normale</option>
+                                <option>Moderatore</option>
+                                <option>SMM</option>
+                                <option>VIP </option>
+                            </select>
+                        </div>
+                        <div class="cell large-2">
+                            <select id="popFilterRule">
+                                <option>Maggiore di</option>
+                                <option>Maggiore Uguale di</option>
+                                <option>Minore di</option>
+                                <option>Minore Uguale di</option>
+                            </select>
+                        </div>
+                        <div class="cell large-1">
+                            <input type="number" value="0" id="popFilterNumber">
+                        </div>
+                        <div class="cell auto">
+                            <a class="button warning filterButton" > Filtra</a>
+                            <a class="button alert cleanFiltButton" > Azzera Filtri</a>
+                        </div>
+                    </div>
+
+
 
                     <table class="hover" >
                         <thead>
@@ -93,8 +131,59 @@
 
 
                 </div>
-                <div class=" hide" id="squealsPanel">
 
+                <div class="reveal tiny" id="creatUserForm" data-reveal>
+
+                       <h3>Inserire i dati dell'utente</h3>
+                       <label>Username</label>
+                       <input type="text" id="modRegUsername">
+                       <label>Password</label>
+                       <input type="password" id="modRegPassword">
+                       <label>Tipo dell'utente</label>
+                       <select id="modRegType">
+                           <option>Normale</option>
+                           <option>Moderatore</option>
+                           <option>SMM</option>
+                           <option>VIP</option>
+                       </select>
+                    <label>Credito Iniziale giornaliero</label>
+                    <input type="number" value="1000" id="modRegCredit">
+                    <a class="button" id="modRegister">Crea</a>
+
+                </div>
+
+                <div class=" hide" id="squealsPanel">
+                    <div class="toolKit grid-x">
+                        <div class="cell large-1"><input type="number" id="showSquealNumber" value="10"></div>
+                        <div class="cell large-1"><a class="button primary refreshpage">Aggiorna</a></div>
+
+                    </div>
+                    <div class="grid-x">
+                        <div class="cell large-2">
+                            <input type="text" placeholder="Inserire il nome da filtrare" id="filtName">
+                        </div>
+                        <div class="cell large-3">
+                            <select id="filtType">
+                                <option>- Scegliere il tipo di utente -</option>
+                                <option>Normale</option>
+                                <option>Moderatore</option>
+                                <option>SMM</option>
+                                <option>VIP </option>
+                            </select>
+                        </div>
+                        <div class="cell large-2">
+                            <select id="popFilterRule">
+                                <option>Maggiore di</option>
+                                <option>Maggiore Uguale di</option>
+                                <option>Minore di</option>
+                                <option>Minore Uguale di</option>
+                            </select>
+                        </div>
+                        <div class="cell large-1">
+                            <input type="number" value="0" id="popFilterNumber">
+                        </div>
+                        <div class="cell auto"><a class="button warning filterButton" id="filtButton"> Filtra</a></div>
+                    </div>
                         <table class="hover" >
                             <thead>
                             <tr>
@@ -117,8 +206,15 @@
 
 
                 </div>
-                <div class=" hide" id="officialPanel">
 
+                <div class=" hide" id="officialPanel">
+                    <div class="toolKit grid-x">
+                        <div class="cell large-2"><a class="button success" id="creatChannel" data-open="creatChannelForm">Crea Canale</a></div>
+                        <div class="cell large-2"><a class="button alert" id="delChannel" data-open="deleteCh">Elimina Canale</a> </div>
+                        <div class="cell large-1"><input type="number" id="showOffNumber" value="10"></div>
+                        <div class="cell large-1"><a class="button primary refreshpage">Aggiorna</a></div>
+
+                    </div>
                     <table class="hover" >
                         <thead>
                         <tr>
@@ -130,6 +226,7 @@
                             <th width="100">Numero di squeals</th>
                             <th width="50">Mutabile</th>
                             <th width="50"> Aggiungere uno squeal</th>
+                            <th class="" >Channel ID</th>
 
                         </tr>
                         </thead>
@@ -137,51 +234,126 @@
 
                         </tbody>
                     </table>
+                </div>
 
-                    <div class="reveal large" id="channelSqueals" data-reveal>
-                        <h1>Gli squaeles di Channel: <span id="channelName"></span></h1>
+                <div class="reveal large" id="channelSqueals" data-reveal>
+                    <h1>Gli squaeles di Channel: <span id="channelName"></span></h1>
+                    <div class="grid-x">
+                        <div class=" cell large-8"> <input type="text" id="addedSquealID"  placeholder="Inserire squeal ID che vuole aggiungere"></div>
+                        <div class="cell auto" id="AggiungiButton">
+                            <a class="button success" id="AggiungiSquealChannel">Aggiungi</a>
+                            <a class="button alert" id="EliminaSquealChannel">Elimina</a>
+                        </div>
 
-                        <table class="hover">
-                            <thead>
-                            <tr>
-                                <th id="autor">Autor</th>
-                                <th>Contenuto</th>
-                                <th width="400">Destinatari</th>
-                                <th width="150">Numero visite</th>
-                                <th width="150">Like</th>
-                                <th width="150">Dislike</th>
-                                <th width="200">Data</th>
-                                <th width="100">Messaggio Automatico</th>
-                                <th id="squealID"> Squeal ID </th>
-                            </tr>
-                            </thead>
-                            <tbody id="channelSquealTable">
-
-                            </tbody>
-                        </table>
                     </div>
+                    <table class="hover">
+                        <thead>
+                        <tr>
+                            <th id="autor">Autor</th>
+                            <th>Contenuto</th>
+                            <th width="400">Destinatari</th>
+                            <th width="150">Numero visite</th>
+                            <th width="150">Like</th>
+                            <th width="150">Dislike</th>
+                            <th width="200">Data</th>
+                            <th width="100">Messaggio Automatico</th>
+                            <th id="squealID"> Squeal ID </th>
+                        </tr>
+                        </thead>
+                        <tbody id="channelSquealTable">
 
-
+                        </tbody>
+                    </table>
                 </div>
+
+                <div class="reveal tiny" id="creatChannelForm" data-reveal>
+                    <h3>Inserire i dati del CANALE</h3>
+                    <label>Nome</label>
+                    <input type="text" id="modOffName">
+                    <label>Descrizione</label>
+                    <textarea id="modOffDesc"></textarea>
+                    <label>Tipo</label>
+                    <input type="text" value="official" id="modOffType" disabled>
+                    <a class="button primary" id="modCreatOff">Crea</a>
+                </div>
+
+                <div class="reveal large" id="deleteCh" data-reveal>
+                    <h2>Spuntare il CANALE che vuole eliminare <a class="button alert" id="delChButton">Elimina i selezionati</a></h2>
+                    <table class="hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th width="200">Nome CANALE</th>
+                            <th width="250">Admin</th>
+                            <th >Descrizione</th>
+                            <th width="100">Numero iscritti</th>
+                            <th width="100">Numero di squeals</th>
+                            <th class="" >Channel ID</th>
+                        </tr>
+                        </thead>
+                        <tbody id="delChannelTable">
+
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="hide" id="privatePanel">
+                    <div class="toolKit grid-x">
+                        <div class="cell large-1"><input type="number" id="showPrivNumber" value="10"></div>
+                        <div class="cell large-1"><a class="button primary refreshpage">Aggiorna</a></div>
 
-                        <table class="hover" >
-                            <thead>
-                            <tr>
-                                <th width="200">Canali privati</th>
-                                <th width="250">Admin</th>
-                                <th>Descrizione</th>
-                                <!--                            <th width="200">Visualizza Mem</th>-->
-                                <th width="100" class="number">Numero iscritti</th>
-                                <th width="100" class="number">Numero di squeals</th>
-                                <th width="50">Mutabile</th>
-                            </tr>
-                            </thead>
-                            <tbody id="privateTable">
+                    </div>
+                    <div class="grid-x">
+                        <div class="cell large-2">
+                            <input type="text" placeholder="Inserire il nome da filtrare" id="filtName">
+                        </div>
+                        <div class="cell large-3">
+                            <select id="filtType">
+                                <option>- Scegliere il tipo di utente -</option>
+                                <option>Normale</option>
+                                <option>Moderatore</option>
+                                <option>SMM</option>
+                                <option>VIP </option>
+                            </select>
+                        </div>
+                        <div class="cell large-2">
+                            <select id="popFilterRule">
+                                <option>Maggiore di</option>
+                                <option>Maggiore Uguale di</option>
+                                <option>Minore di</option>
+                                <option>Minore Uguale di</option>
+                            </select>
+                        </div>
+                        <div class="cell large-1">
+                            <input type="number" value="0" id="popFilterNumber">
+                        </div>
+                        <div class="cell auto"><a class="button warning filterButton" id="filtButton"> Filtra</a></div>
+                    </div>
+                    <table class="hover" >
+                        <thead>
+                        <tr>
+                            <th width="200">Canali privati</th>
+                            <th width="250">Admin</th>
+                            <th>Descrizione</th>
+                            <!--                            <th width="200">Visualizza Mem</th>-->
+                            <th width="100" class="number">Numero iscritti</th>
+                            <th width="100" class="number">Numero di squeals</th>
+                            <th width="50">Mutabile</th>
+                            <th  id="channelPID">Channel ID</th>
+                        </tr>
+                        </thead>
+                        <tbody id="privateTable">
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
                 </div>
+
+
+
+
+
+
+
 
                 <footer class="button-group align-right">
                     <a class="button alert cancel" id="reset"  >Reset</a>

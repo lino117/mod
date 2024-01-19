@@ -25,4 +25,22 @@
 .addButton{
     border-radius: 10rem;
 }
+#AggiungiButton{
+    margin-left: 1rem;
+}
+#modRegister{
+    margin-left: 20rem;
+}
+
+.toolKit input {
+    margin-left: 1rem;
+
+}
+.toolKit a{
+    margin-left: 1rem;
+}
+#modCreatOff{
+    margin-left: 20rem;
+}
+
 
