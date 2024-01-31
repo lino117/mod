@@ -1,5 +1,101 @@
-
 const BaseUrl = 'http://localhost:3000/social/'
+
+disablePageArrow = async (pageNum,isLastPage)=>{
+    const prevArrow = $('.pagination-previous')
+    const nextArrow = $('.pagination-next')
+    if ( pageNum == 1 ){
+        $('#prevArrow').remove()
+        prevArrow.addClass('disabled').text('Previous')
+    }else if (prevArrow.hasClass('disabled') ){
+        prevArrow.removeClass('disabled')
+            .text('')
+            .html('<a id="prevArrow" aria-label="previous page">Previous</a>')
+    }
+    if (isLastPage){
+        $('#nextArrow').remove()
+        nextArrow.addClass('disabled').text('Next')
+    }else if (nextArrow.hasClass('disabled') ){
+        nextArrow.removeClass('disabled')
+            .text('')
+            .html('<a id="nextArrow" aria-label="next page">Next</a>')
+    }
+}
+//
+// changePageNum = async (prevCurrent,step)=>{
+//     $('.current').text(prevCurrent+step)
+// }
+showPage=async (showPage)=>{
+    const pageNum = $('.current').text()
+    var IsLastPage = false
+    // 初始化 table主体
+    $('tbody').text('')
+    // 判断页面 并发送 请求
+     switch (showPage) {
+        case 'users' :
+        case 'usersPanel':
+        case 'userTable' :
+            const userFilter = {
+                showNumber : parseInt($('#showUserNumber').val()),
+                filterName :$('#filtName').val(),
+                filtRule : $('#popFilterRule').val().includes('Maggiore') ? 'gte':'lte',
+                filtPop : parseInt($('#popFilterNumber').val()),
+                filtType: modRegisterUserType($('#filtType').val()),
+                pageNum :pageNum
+            }
+            console.log(userFilter)
+            $.get(BaseUrl + 'get_all_users', {userFilter}, async (res) => {
+                await getUsers(res.users, $('#userTable'))
+                disablePageArrow(pageNum,res.IsLastPage)
+            })
+            break;
+
+        case 'squeals':
+        case 'squealsPanel':
+        case 'squealTable':
+            const  squealFilter = {
+                showNumber : parseInt($('#showSquealNumber').val()),
+                autor : $('#filtAutor').val(),
+                recipient : $('#filtRep').val(),
+                endTime : $('#filtEndTime').val(),
+                startTime : $('#filtStartTime').val(),
+                pageNum :pageNum
+            }
+            $.get(BaseUrl + 'allSqueals', {squealFilter},async (res) => {
+                await getSqueals(res.squeals, $('#squealTable'))
+                disablePageArrow(pageNum,res.IsLastPage)
+            })
+            break;
+
+        case 'official':
+        case 'officialPanel':
+            const offFilter ={
+                showNumber : parseInt($('#showOffNumber').val()),
+                pageNum:pageNum
+            }
+            $.get(BaseUrl + 'allChannelO', {offFilter},async (res) => {
+                await getChannel(res.data, $('#officialTable'))
+                disablePageArrow(pageNum,res.IsLastPage)
+            })
+            break;
+        case 'private':
+        case 'privatePanel':
+            const privateFilter ={
+                showNumber : parseInt($('#showPrivNumber').val()),
+                pageNum:pageNum
+            }
+            $.get(BaseUrl + 'allChannelP',{privateFilter}, async (res) => {
+                await getChannel(res.data, $('#privateTable'))
+                disablePageArrow(pageNum,res.IsLastPage)
+            })
+            break;
+    }
+
+}
+
+reStamp = async (page)=>{
+    $('.current').text(1)
+    showPage(page)
+}
 
 addSqueal = async ()=>{
 
@@ -88,7 +184,7 @@ getUsers = async (res,table)=>{
 getSqueals = async (res,table,squealID)=>{
     for (const squeal of res) {
         const row = $('<tr>')
-        const username = $('<td id="username">' + squeal.sender + '</td>')
+        const username = $('<td id="username">' + squeal.sender.username + '</td>')
         const contenuto = $('<td>' + squeal.body + '</td>')
         const numTdHead = '<td class="grid-container"><div class="grid-x"> <span class="cell large-5"> '
         const numTdFeet = '</span><input class="cell large-5" value="0" ></div></td>'
@@ -117,7 +213,7 @@ getChannel = async (res, table)=>{
     for (const channel of res) {
         const row = $('<tr>')
         const name = $('<td id="name">' + channel.name + '</td>')
-        const admin = $('<td>' + channel.admin + '</td>')
+        const admin = $('<td>' + channel.admin[0].username + '</td>')
         var desc
         var button
         if (channel.typeOf==='private'){
@@ -195,7 +291,7 @@ modificUser = async (tbody, username)=>{
             url: BaseUrl + 'updateUser'
         }).done((res) => {
             alert( 'Modifica eseguita su : '+res)
-            showPage('usersPanel')
+            reStamp('usersPanel')
         })
 
     }
@@ -232,18 +328,15 @@ modificSqueal = async (tbody)=>{
                    newInfos.newRecipients = element.value.split(',')
                     break;
                 case 2 :
-                    // console.log('impression',element.value)
                     newInfos.visitNumber=(element.value!=0? element.value:0)
 
                     break;
                 case 3:
-                    // console.log('like',element.value)
 
                     newInfos.likeNumber=(element.value!=0? element.value:0)
 
                     break;
                 case 4:
-                    // console.log('dislike',element.value)
 
                     newInfos.dislikeNumber=(element.value!=0? element.value:0)
 
@@ -279,7 +372,7 @@ modificSqueal = async (tbody)=>{
             url: BaseUrl + 'updateSqueal'
         }).done((res) => {
             alert( 'Modifica eseguita')
-            showPage('squealsPanel')
+            reStamp('squealPanel')
         })
 
     }
@@ -312,48 +405,13 @@ modificOfficial = async (tbody)=>{
             url: BaseUrl + 'updateChannelOff'
         }).done((res) => {
             alert( 'Modifica eseguita su : ' + res)
-            showPage('officialPanel')
+            reStamp('officialPanel')
 
         })
     }
 
 
 
-}
-
-showPage=async (showPage)=>{
-    // 初始化 table主体
-    $('tbody').text('')
-    // 判断页面 并发送 请求
-    switch (showPage) {
-        case 'users' :
-        case 'usersPanel':
-            $.get(BaseUrl + 'get_all_users', {showNumber : $('#showUserNumber').val()}, async (res) => {
-                await getUsers(res, $('#userTable'))
-            })
-            break;
-
-        case 'squeals':
-        case 'squealsPanel':
-            $.get(BaseUrl + 'allSqueals', {showNumber : $('#showSquealNumber').val()},async (res) => {
-                await getSqueals(res, $('#squealTable'))
-            })
-            break;
-
-        case 'official':
-        case 'officialPanel':
-            $.get(BaseUrl + 'allChannelO', {showNumber : $('#showOffNumber').val()},async (res) => {
-                await getChannel(res, $('#officialTable'))
-            })
-            break;
-        case 'private':
-        case 'privatePanel':
-
-            $.get(BaseUrl + 'allChannelP',{showNumber : $('#showPrivNumber').val()}, async (res) => {
-                await getChannel(res, $('#privateTable'))
-            })
-            break;
-    }
 }
 
 modRegisterUserType =  (type)=>{
@@ -377,28 +435,35 @@ modRegisterUserType =  (type)=>{
 }
 
 showFiltPage= async (table)=>{
-
     switch (table) {
         case 'userTable' :
-            const filter ={
+           const userFilter = {
                 showNumber : parseInt($('#showUserNumber').val()),
                 filterName :$('#filtName').val(),
                 filtRule : $('#popFilterRule').val(),
                 filtPop : parseInt($('#popFilterNumber').val()),
                 filtType: modRegisterUserType($('#filtType').val())
             }
-            $.get(BaseUrl + 'get_filt_users', {filter}, async (res) => {
+            $.get(BaseUrl + 'get_filt_users', {userFilter}, async (res) => {
                 await getUsers(res, $('#'+table))
             })
             break;
 
-        // case 'squealTable':
+        case 'squealTable':
 
-        //     $.get(BaseUrl + 'allSqueals', {showNumber : $('#showSquealNumber').val()},async (res) => {
-        //         await getSqueals(res, $('#squealTable'))
-        //     })
-        //     break;
-        //
+            const  squealFilter = {
+                showNumber : parseInt($('#showSquealNumber').val()),
+                autor : $('#filtAutor').val(),
+                recipient : $('#filtRep').val(),
+                endTime : $('#filtEndTime').val()
+            }
+
+            $.get(BaseUrl + 'allSqueals', {squealFilter},async (res) => {
+                await getSqueals(res, $('#'+table))
+            })
+
+            break;
+
         // case 'officialTable':
 
         //     $.get(BaseUrl + 'allChannelO', {showNumber : $('#showOffNumber').val()},async (res) => {
@@ -417,12 +482,7 @@ showFiltPage= async (table)=>{
 $(document).ready(()=>{
 
     $(document).foundation()
-
-    $.get(BaseUrl + 'get_all_users',{showNumber : $('#showUserNumber').val()}, async (res) => {
-
-        await getUsers(res,$('#userTable'))
-
-    })
+    reStamp('userTable')
 
     $('#reset').click( ()=>{
         $('input').prop({
@@ -432,7 +492,7 @@ $(document).ready(()=>{
 
     $('.refreshpage').click(()=>{
         const panel = $('.visible').attr('id')
-        showPage(panel)
+        reStamp(panel)
     })
 
     $('#AggiungiSquealChannel').click(()=> {
@@ -480,7 +540,6 @@ $(document).ready(()=>{
         switch (tbody.attr('id')) {
             case 'userTable':
                 modificUser(tbody,username)
-                console.log('switch case')
                 break;
             case 'squealTable':
                 modificSqueal(tbody)
@@ -502,7 +561,6 @@ $(document).ready(()=>{
              userType : type,
              creditInit : $('#modRegCredit').val()
         }
-        console.log(newUser.userType,'type qui')
         if (newUser.username && newUser.password && newUser.creditInit){
             $.post(BaseUrl + 'register',{
                 username:newUser.username,
@@ -512,7 +570,7 @@ $(document).ready(()=>{
             },async (res)=>{
                 alert('Registrazione effettuata')
                 $('#creatUserForm').foundation('close')
-                showPage('usersPanel')
+                reStamp('usersPanel')
 
             })
 
@@ -533,7 +591,7 @@ $(document).ready(()=>{
                 desc:newChannel.desc
             }, async (res)=>{
                 $('#creatChannelForm').foundation('close')
-                showPage('officialPanel')
+                reStamp('officialPanel')
             })
         }
     })
@@ -561,7 +619,7 @@ $(document).ready(()=>{
                 }).done((res) => {
                     alert( 'I seguenti CANALI vengono elieminati :'+res)
                     $('#deleteCh').foundation('close')
-                    showPage('officialPanel')
+                    reStamp('officialPanel')
 
                 })
 
@@ -583,7 +641,9 @@ $(document).ready(()=>{
     $('.filterButton').click(async ()=>{
         const tbody = $('.visible').find('tbody')
         tbody.text('')
-        showFiltPage(tbody.attr('id'))
+        reStamp(tbody.attr('id'))
+
+        // user 页面需要再改一下
     })
 
     $('.cleanFiltButton').click(async (e)=>{
@@ -600,6 +660,25 @@ $(document).ready(()=>{
         })
     })
 
+    $('.pagination-next').click(async (e)=>{
+        if ( !$(e.target).hasClass('disabled')){
+            const tbody = $('.visible').find('tbody')
+            const currentPageNum = parseInt($('.current').text())+1
+            $('.current').text(currentPageNum)
+            showPage(tbody.attr('id'))
+        }
+
+    })
+
+    $('.pagination-previous').click(async (e)=>{
+        if ( !$(e.target).hasClass('disabled')) {
+            const tbody = $('.visible').find('tbody')
+            const currentPageNum = parseInt($('.current').text()) - 1
+            $('.current').text(currentPageNum)
+            showPage(tbody.attr('id'))
+        }
+    })
+
     $('.index').click( (elem) => {
             const selector = '\#' + elem.target.id
             const content = $(selector).attr('href')
@@ -613,7 +692,9 @@ $(document).ready(()=>{
                 },
                 100
             )
-        showPage(clicked.attr('id'))
+
+        reStamp(clicked.attr('id'))
+
         // 切换显示画面
           $('.visible').removeClass('visible').addClass('hide')
 

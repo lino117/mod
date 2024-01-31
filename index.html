@@ -21,30 +21,23 @@
                 <ul class="dropdown menu" data-dropdown-menu>
                     <li class="menu-text">SquealerAdmin</li>
 
-                    <li >
-
-                        <label>
-                            <input type="search" placeholder="肥肉都是自己吃进去的！！！1">
-                        </label>
-                    </li>
-                    <li><button type="submit" class="button"><i class="fi-magnifying-glass"></i>Search</button></li>
                 </ul>
             </div>
 
-            <div class="top-bar-right">
-                <ul class="menu">
-                    <li>
-                        <a href="" id="clickProfile">
-                        <img id="profile" class="border_radius" src="img/pixiu.jpg" crossorigin="anonymous">
-                            <ul class="menu vertical hide" id="profileMenu">
-                                <li>Profile</li>
-                                <li>Setting</li>
-                                <li>Log Out</li>
-                            </ul>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<!--            <div class="top-bar-right">-->
+<!--                <ul class="menu">-->
+<!--                    <li>-->
+<!--                        <a href="" id="clickProfile">-->
+<!--                        <img id="profile" class="border_radius" src="img/pixiu.jpg" crossorigin="anonymous">-->
+<!--                            <ul class="menu vertical hide" id="profileMenu">-->
+<!--                                <li>Profile</li>-->
+<!--                                <li>Setting</li>-->
+<!--                                <li>Log Out</li>-->
+<!--                            </ul>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
     </div>
 
@@ -94,9 +87,7 @@
                         </div>
                         <div class="cell large-2">
                             <select id="popFilterRule">
-                                <option>Maggiore di</option>
                                 <option>Maggiore Uguale di</option>
-                                <option>Minore di</option>
                                 <option>Minore Uguale di</option>
                             </select>
                         </div>
@@ -160,29 +151,30 @@
                     </div>
                     <div class="grid-x">
                         <div class="cell large-2">
-                            <input type="text" placeholder="Inserire il nome da filtrare" id="filtName">
+                            <span> Inserire il nome dell'Autore</span>
+                            <input type="text" placeholder="Inserire il nome dell'autore" id="filtAutor">
                         </div>
                         <div class="cell large-3">
-                            <select id="filtType">
-                                <option>- Scegliere il tipo di utente -</option>
-                                <option>Normale</option>
-                                <option>Moderatore</option>
-                                <option>SMM</option>
-                                <option>VIP </option>
-                            </select>
+                            <span> Inserire il nome del Destinatario</span>
+                            <input type="text" placeholder="Inserire il nome del destinatario" id="filtRep">
                         </div>
+
+
                         <div class="cell large-2">
-                            <select id="popFilterRule">
-                                <option>Maggiore di</option>
-                                <option>Maggiore Uguale di</option>
-                                <option>Minore di</option>
-                                <option>Minore Uguale di</option>
-                            </select>
+                            <span> Inizio da</span>
+                           <input type="date" placeholder="Inserire la data di inizio" id="filtStartTime">
                         </div>
-                        <div class="cell large-1">
-                            <input type="number" value="0" id="popFilterNumber">
+
+                        <div class="cell large-2">
+                            <span> Fino a </span>
+                            <input type="date" placeholder="Inserire la data di fine " id="filtEndTime">
                         </div>
-                        <div class="cell auto"><a class="button warning filterButton" id="filtButton"> Filtra</a></div>
+
+                        <div class="cell auto">
+                            <div> &thinsp;</div>
+                            <a class="button warning filterButton" > Filtra</a>
+                            <a class="button alert cleanFiltButton" > Azzera Filtri</a>
+                        </div>
                     </div>
                         <table class="hover" >
                             <thead>
@@ -303,32 +295,32 @@
                         <div class="cell large-1"><a class="button primary refreshpage">Aggiorna</a></div>
 
                     </div>
-                    <div class="grid-x">
-                        <div class="cell large-2">
-                            <input type="text" placeholder="Inserire il nome da filtrare" id="filtName">
-                        </div>
-                        <div class="cell large-3">
-                            <select id="filtType">
-                                <option>- Scegliere il tipo di utente -</option>
-                                <option>Normale</option>
-                                <option>Moderatore</option>
-                                <option>SMM</option>
-                                <option>VIP </option>
-                            </select>
-                        </div>
-                        <div class="cell large-2">
-                            <select id="popFilterRule">
-                                <option>Maggiore di</option>
-                                <option>Maggiore Uguale di</option>
-                                <option>Minore di</option>
-                                <option>Minore Uguale di</option>
-                            </select>
-                        </div>
-                        <div class="cell large-1">
-                            <input type="number" value="0" id="popFilterNumber">
-                        </div>
-                        <div class="cell auto"><a class="button warning filterButton" id="filtButton"> Filtra</a></div>
-                    </div>
+<!--                    <div class="grid-x">-->
+<!--                        <div class="cell large-2">-->
+<!--                            <input type="text" placeholder="Inserire il nome da filtrare" id="filtName">-->
+<!--                        </div>-->
+<!--                        <div class="cell large-3">-->
+<!--                            <select id="filtType">-->
+<!--                                <option>- Scegliere il tipo di utente -</option>-->
+<!--                                <option>Normale</option>-->
+<!--                                <option>Moderatore</option>-->
+<!--                                <option>SMM</option>-->
+<!--                                <option>VIP </option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="cell large-2">-->
+<!--                            <select id="popFilterRule">-->
+<!--                                <option>Maggiore di</option>-->
+<!--                                <option>Maggiore Uguale di</option>-->
+<!--                                <option>Minore di</option>-->
+<!--                                <option>Minore Uguale di</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="cell large-1">-->
+<!--                            <input type="number" value="0" id="popFilterNumber">-->
+<!--                        </div>-->
+<!--                        <div class="cell auto"><a class="button warning filterButton" id="filtButton"> Filtra</a></div>-->
+<!--                    </div>-->
                     <table class="hover" >
                         <thead>
                         <tr>
@@ -354,7 +346,13 @@
 
 
 
-
+                <nav aria-label="Pagination">
+                    <ul class="pagination text-center" id="paginationUl">
+                        <li class="pagination-previous disabled">Previous</li>
+                        <li class="current">1</li>
+                        <li class="pagination-next"><a id="nextArrow" aria-label="Next page">Next</a></li>
+                    </ul>
+                </nav>
                 <footer class="button-group align-right">
                     <a class="button alert cancel" id="reset"  >Reset</a>
                     <a class="button success change" id="change" >Modifica</a>
