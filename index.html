@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="utf-8">
-    <title>Ciao Bellezza！</title>
+    <title></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,24 +20,10 @@
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
                     <li class="menu-text">SquealerAdmin</li>
-
                 </ul>
             </div>
 
-<!--            <div class="top-bar-right">-->
-<!--                <ul class="menu">-->
-<!--                    <li>-->
-<!--                        <a href="" id="clickProfile">-->
-<!--                        <img id="profile" class="border_radius" src="img/pixiu.jpg" crossorigin="anonymous">-->
-<!--                            <ul class="menu vertical hide" id="profileMenu">-->
-<!--                                <li>Profile</li>-->
-<!--                                <li>Setting</li>-->
-<!--                                <li>Log Out</li>-->
-<!--                            </ul>-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
+
         </div>
     </div>
 
@@ -231,9 +217,8 @@
                 <div class="reveal large" id="channelSqueals" data-reveal>
                     <h1>Gli squaeles di Channel: <span id="channelName"></span></h1>
                     <div class="grid-x">
-                        <div class=" cell large-8"> <input type="text" id="addedSquealID"  placeholder="Inserire squeal ID che vuole aggiungere"></div>
                         <div class="cell auto" id="AggiungiButton">
-                            <a class="button success" id="AggiungiSquealChannel">Aggiungi</a>
+                            <a class="button success" id="AggiungiSquealChannel" data-open="addSqueal">Aggiungi</a>
                             <a class="button alert" id="EliminaSquealChannel">Elimina</a>
                         </div>
 
@@ -241,7 +226,7 @@
                     <table class="hover">
                         <thead>
                         <tr>
-                            <th id="autor">Autor</th>
+                            <th >Autore</th>
                             <th>Contenuto</th>
                             <th width="400">Destinatari</th>
                             <th width="150">Numero visite</th>
@@ -249,10 +234,36 @@
                             <th width="150">Dislike</th>
                             <th width="200">Data</th>
                             <th width="100">Messaggio Automatico</th>
-                            <th id="squealID"> Squeal ID </th>
+                            <th> Squeal ID </th>
                         </tr>
                         </thead>
                         <tbody id="channelSquealTable">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="reveal small" id="addSqueal" data-reveal>
+                    <h3>Squeals che non sono presenti in Channel</h3>
+                    <div class="grid-x">
+                        <a class="button success" id="addToChannel">Aggiungi</a>
+
+                        <div>Filter</div>
+
+                    </div>
+                    <table class="hover">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th >Autore</th>
+                            <th>Contenuto</th>
+                            <th width="150">Like</th>
+                            <th width="150">Dislike</th>
+                            <th width="200">Data</th>
+                            <th id="addSquealID"> Squeal ID </th>
+                        </tr>
+                        </thead>
+                        <tbody id="noChannelSquealTable">
 
                         </tbody>
                     </table>
@@ -295,32 +306,7 @@
                         <div class="cell large-1"><a class="button primary refreshpage">Aggiorna</a></div>
 
                     </div>
-<!--                    <div class="grid-x">-->
-<!--                        <div class="cell large-2">-->
-<!--                            <input type="text" placeholder="Inserire il nome da filtrare" id="filtName">-->
-<!--                        </div>-->
-<!--                        <div class="cell large-3">-->
-<!--                            <select id="filtType">-->
-<!--                                <option>- Scegliere il tipo di utente -</option>-->
-<!--                                <option>Normale</option>-->
-<!--                                <option>Moderatore</option>-->
-<!--                                <option>SMM</option>-->
-<!--                                <option>VIP </option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div class="cell large-2">-->
-<!--                            <select id="popFilterRule">-->
-<!--                                <option>Maggiore di</option>-->
-<!--                                <option>Maggiore Uguale di</option>-->
-<!--                                <option>Minore di</option>-->
-<!--                                <option>Minore Uguale di</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div class="cell large-1">-->
-<!--                            <input type="number" value="0" id="popFilterNumber">-->
-<!--                        </div>-->
-<!--                        <div class="cell auto"><a class="button warning filterButton" id="filtButton"> Filtra</a></div>-->
-<!--                    </div>-->
+
                     <table class="hover" >
                         <thead>
                         <tr>

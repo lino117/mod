@@ -20,10 +20,7 @@ disablePageArrow = async (pageNum,isLastPage)=>{
             .html('<a id="nextArrow" aria-label="next page">Next</a>')
     }
 }
-//
-// changePageNum = async (prevCurrent,step)=>{
-//     $('.current').text(prevCurrent+step)
-// }
+
 showPage=async (showPage)=>{
     const pageNum = $('.current').text()
     var IsLastPage = false
@@ -42,7 +39,6 @@ showPage=async (showPage)=>{
                 filtType: modRegisterUserType($('#filtType').val()),
                 pageNum :pageNum
             }
-            console.log(userFilter)
             $.get(BaseUrl + 'get_all_users', {userFilter}, async (res) => {
                 await getUsers(res.users, $('#userTable'))
                 disablePageArrow(pageNum,res.IsLastPage)
@@ -97,7 +93,7 @@ reStamp = async (page)=>{
     showPage(page)
 }
 
-addSqueal = async ()=>{
+addSquealModal = async ()=>{
 
     const tbody = $('#officialTable')
 
@@ -106,6 +102,7 @@ addSqueal = async ()=>{
         const index = $(elem.target).closest('tr').index()
         const channelName = names[index].innerHTML
         $('#channelName').text(channelName)
+
         $.get(BaseUrl + 'channelSqueal_get',{channelName : channelName}, async (res) => {
             await getChannelSqueals(res, $('#channelSquealTable'))
         })
@@ -117,14 +114,13 @@ getChannelSqueals = async (res,table)=>{
     table.text('')
     for (const squeal of res) {
             const row = $('<tr>')
-            const username = $('<td id="username">' + squeal.sender + '</td>')
+            const username = $('<td id="username">' + squeal.sender.username + '</td>')
             const contenuto = $('<td>' + squeal.body + '</td>')
             const destinatari = $('<td>' + squeal.recipients + '</td>')
             const impression = $('<td>' + squeal.reaction.impression+'</td>')
             const like = $('<td>' + squeal.reaction.like+'</td>')
             const dislike = $('<td>' + squeal.reaction.dislike+'</td>')
             const data = $('<td>' + squeal.dateTime + '</td>')
-            const squealChannel = $('<td>'+squeal.squealerChannels+'</td>')
             var automatic
             if (squeal.automaticMessage) {
                 automatic = $('<td><input type="checkbox" id="automatic" checked></td>')
@@ -135,8 +131,25 @@ getChannelSqueals = async (res,table)=>{
             const closeRow = $('</tr>')
             row.append([username, contenuto, destinatari, impression, like, dislike, data, automatic, squealId])
             table.append([row, closeRow])
-        }
+    }
 
+}
+
+getNoChSqueals =async (res,table)=>{
+    table.text('')
+    for (const squeal of res) {
+        const row = $('<tr>')
+        const checkbox = $('<td><input type="checkbox" class="delCheckbox">')
+        const username = $('<td id="name">' + squeal.sender.username + '</td>')
+        const contenuto = $('<td>' + squeal.body + '</td>')
+        const like = $('<td>' + squeal.reaction.like+'</td>')
+        const dislike = $('<td>' + squeal.reaction.dislike+'</td>')
+        const data = $('<td>' + squeal.dateTime + '</td>')
+        const squealId = $('<td id="squealID">' + squeal._id + '</td>')
+        const closeRow = $('</tr>')
+        row.append([checkbox,username, contenuto,like, dislike, data, squealId])
+        table.append([row, closeRow])
+    }
 }
 
 getDelChannel = async (res,table)=>{
@@ -221,7 +234,7 @@ getChannel = async (res, table)=>{
             button =  $('<td class="hide"><a class="button tiny"><i class="fi-plus"></i></a>')
         }else{
             desc= $('<td class="grid-container"><div class="grid-x"> <p class="cell large-5" id="channelDescription">'+channel.description+'</p><input class="cell large-5" type="text"></div> </td>')
-            button = $('<td><a class="button tiny addButton" id="addButton" onclick="addSqueal()" data-open="channelSqueals">+</a>')
+            button = $('<td><a class="button tiny addButton" id="addButton" onclick="addSquealModal()" data-open="channelSqueals">+</a>')
         }
         const numFollowers = $('<td>' + channel.followers + '</td>')
         const numSqueals = $('<td>' + channel.numPost + '</td>')
@@ -494,24 +507,38 @@ $(document).ready(()=>{
         const panel = $('.visible').attr('id')
         reStamp(panel)
     })
+    // aprire squeal che appartengono cahnnel
+    $('#channelSqueals').click(()=>{
+        // const table = $('#noChannelSquealTable')
 
-    $('#AggiungiSquealChannel').click(()=> {
-        const squealID = $('#addedSquealID').val()
-        // location.reload()
-        // const names = $('#officialTable').find("td[id='name']")
-        // const index = $(elem.target).closest('tr').index()
+        $.get(BaseUrl + 'noChannelSqueals',async (res) => {
+            await getNoChSqueals(res, $('#noChannelSquealTable'))
+        })
+    })
 
+    $('#addToChannel').click(()=> {
         const channelName = $('#channelName').text()
+        console.log(channelName)
+        var addSquealsID = []
+        $('#delChannelTable > tr').each(async (index,tr)=>{
+            if ($(tr).find('input').prop('checked')){
+                addSquealsID.push($(tr).find("td[id='addSquealID']").text())
+            }
+        })
         $.ajax({
             contentType: "application/json",
-            data: JSON.stringify({squealID: squealID, channelName: channelName}),
+            data: JSON.stringify({squealIDs: addSquealsID, channelName: channelName}),
             dataType: "json",
             method: "PATCH",
             url: BaseUrl + 'addSquealChannel'
         }).done((res) => {
-
+            $('#addSqueal').foundation(close)
             $.get(BaseUrl + 'channelSqueal_get',{channelName : channelName}, async (res) => {
-                await getChannelSqueals(res, $('#channelSquealTable'))
+                alert(res)
+                $('#addSqueal').foundation(close)
+                $.get(BaseUrl + 'channelSqueal_get',{channelName : channelName}, async (res) => {
+                    await getChannelSqueals(res, $('#channelSquealTable'))
+                })
             })
         })
     })
@@ -531,6 +558,8 @@ $(document).ready(()=>{
             })
         })
     })
+
+
 
     $('#change').click(()=>{
 
@@ -597,8 +626,12 @@ $(document).ready(()=>{
     })
 
     $('#delChannel').click(()=>{
-        $.get(BaseUrl + 'allChannelO', {showNumber : $('#showOffNumber').val()},async (res) => {
-            await getDelChannel(res, $('#delChannelTable'))
+        const offFilter ={
+            showNumber : parseInt($('#showOffNumber').val()),
+            pageNum:  $('.current').text()
+        }
+        $.get(BaseUrl + 'allChannelO', {offFilter},async (res) => {
+            await getDelChannel(res.data, $('#delChannelTable'))
         })
 
         $('#delChButton').click(()=>{
