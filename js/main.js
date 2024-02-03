@@ -1,4 +1,5 @@
-const BaseUrl = 'http://localhost:3000/social/'
+const BaseUrl = 'https://site222320.tw.cs.unibo.it/social/'
+// const BaseUrl = 'http://localhost:3000/social/'
 
 disablePageArrow = async (pageNum,isLastPage)=>{
     const prevArrow = $('.pagination-previous')
@@ -116,7 +117,6 @@ getChannelSqueals = async (res,table)=>{
             const row = $('<tr>')
             const username = $('<td id="username">' + squeal.sender.username + '</td>')
             const contenuto = $('<td>' + squeal.body + '</td>')
-            const destinatari = $('<td>' + squeal.recipients + '</td>')
             const impression = $('<td>' + squeal.reaction.impression+'</td>')
             const like = $('<td>' + squeal.reaction.like+'</td>')
             const dislike = $('<td>' + squeal.reaction.dislike+'</td>')
@@ -129,7 +129,7 @@ getChannelSqueals = async (res,table)=>{
             }
             const squealId = $('<td id="squealID">' + squeal._id + '</td>')
             const closeRow = $('</tr>')
-            row.append([username, contenuto, destinatari, impression, like, dislike, data, automatic, squealId])
+            row.append([username, contenuto, impression, like, dislike, data, automatic, squealId])
             table.append([row, closeRow])
     }
 
@@ -145,7 +145,7 @@ getNoChSqueals =async (res,table)=>{
         const like = $('<td>' + squeal.reaction.like+'</td>')
         const dislike = $('<td>' + squeal.reaction.dislike+'</td>')
         const data = $('<td>' + squeal.dateTime + '</td>')
-        const squealId = $('<td id="squealID">' + squeal._id + '</td>')
+        const squealId = $('<td id="addSquealID">' + squeal._id + '</td>')
         const closeRow = $('</tr>')
         row.append([checkbox,username, contenuto,like, dislike, data, squealId])
         table.append([row, closeRow])
@@ -193,7 +193,19 @@ getUsers = async (res,table)=>{
         table.append ([row,closeRow])
     }
 }
-
+getRecipients = async (recipients,type)=>{
+    var array = []
+    console.log(recipients)
+        for (const recipient of recipients) {
+            if (type ==='users') {
+                array.push(recipient.username)
+            }else{
+                array.push(recipient.name)
+            }
+        }
+    console.log(array)
+    return array
+}
 getSqueals = async (res,table,squealID)=>{
     for (const squeal of res) {
         const row = $('<tr>')
@@ -201,7 +213,16 @@ getSqueals = async (res,table,squealID)=>{
         const contenuto = $('<td>' + squeal.body + '</td>')
         const numTdHead = '<td class="grid-container"><div class="grid-x"> <span class="cell large-5"> '
         const numTdFeet = '</span><input class="cell large-5" value="0" ></div></td>'
-        const destinatari = $(numTdHead+squeal.recipients +'</span><input class="cell large-5" type="text" value="'+squeal.recipients+'"></div> </td>')
+        var destinatari
+
+        if (squeal.recipients.users[0]){
+            const users = await getRecipients(squeal.recipients.users,'users')
+            destinatari = $(numTdHead+users +'</span><input class="cell large-5" type="text" value="'+users+'"></div> </td>')
+        }else {
+            const channels = await getRecipients(squeal.recipients.users,'channel')
+            destinatari = $(numTdHead+ channels+'</span><input class="cell large-5" type="text" value="'+channels+'"></div> </td>')
+        }
+
         const impression = $(numTdHead + squeal.reaction.impression + numTdFeet)
         const like = $(numTdHead + squeal.reaction.like + numTdFeet)
         const dislike = $(numTdHead + squeal.reaction.dislike + numTdFeet)
@@ -518,10 +539,10 @@ $(document).ready(()=>{
 
     $('#addToChannel').click(()=> {
         const channelName = $('#channelName').text()
-        console.log(channelName)
         var addSquealsID = []
-        $('#delChannelTable > tr').each(async (index,tr)=>{
+        $('#noChannelSquealTable > tr').each(async (index,tr)=>{
             if ($(tr).find('input').prop('checked')){
+                console.log($(tr).find("td[id='addSquealID']").text())
                 addSquealsID.push($(tr).find("td[id='addSquealID']").text())
             }
         })
@@ -531,11 +552,9 @@ $(document).ready(()=>{
             dataType: "json",
             method: "PATCH",
             url: BaseUrl + 'addSquealChannel'
-        }).done((res) => {
-            $('#addSqueal').foundation(close)
+        }).always((res) => {
             $.get(BaseUrl + 'channelSqueal_get',{channelName : channelName}, async (res) => {
-                alert(res)
-                $('#addSqueal').foundation(close)
+                $('#addSqueal').foundation('close')
                 $.get(BaseUrl + 'channelSqueal_get',{channelName : channelName}, async (res) => {
                     await getChannelSqueals(res, $('#channelSquealTable'))
                 })
